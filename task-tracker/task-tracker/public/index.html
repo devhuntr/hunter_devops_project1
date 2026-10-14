@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daymark · Task Tracker</title>
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+<div id="tracker" class="app-shell">
+  <header class="topbar"><div class="brand"><span class="brand-icon">✓</span> daymark<span class="brand-dot">.</span></div><span class="top-note">A little progress, every day.</span></header>
+  <main class="workspace">
+    <div class="eyebrow">YOUR PERSONAL WORKSPACE <span class="eyebrow-line"></span></div>
+    <h1>Make room for <em>done.</em></h1>
+    <p class="intro">Capture what matters. Keep moving forward.</p>
+    <section class="task-panel" aria-label="Task tracker">
+      <form class="add-form" v-on:submit.prevent="addTask">
+        <label for="new-task" class="sr-only">New task</label>
+        <span class="input-plus" aria-hidden="true">+</span>
+        <input id="new-task" type="text" v-model="newTitle" maxlength="160" placeholder="What needs to get done?" autocomplete="off">
+        <button type="submit" v-bind:disabled="busy || !newTitle.trim()">Add task <span aria-hidden="true">↗</span></button>
+      </form>
+      <div class="list-header"><div><h2>My tasks</h2><span class="task-count">{{ remaining }} remaining</span></div><div class="filters" role="group" aria-label="Filter tasks"><button type="button" v-for="option in filters" v-bind:class="{ active: filter === option.value }" v-on:click="filter = option.value">{{ option.label }}</button></div></div>
+      <div class="progress-track" role="progressbar" v-bind:aria-valuenow="percent" aria-valuemin="0" aria-valuemax="100" aria-label="Tasks completed"><div class="progress-fill" v-bind:style="{ width: percent + '%' }"></div></div>
+      <p class="progress-label">{{ completedCount }} of {{ tasks.length }} completed <span>{{ percent }}%</span></p>
+      <p class="error" v-if="error" role="alert">{{ error }} <button type="button" v-on:click="error = ''" aria-label="Dismiss error">×</button></p>
+      <div class="tasks" v-if="visibleTasks.length"><div class="task-row" v-for="task in visibleTasks" track-by="id"><label class="task-main"><input type="checkbox" v-bind:checked="task.completed" v-on:change="toggleTask(task)" v-bind:disabled="busy"><span class="custom-check" aria-hidden="true">✓</span><span class="task-title" v-bind:class="{ finished: task.completed }">{{ task.title }}</span></label><button class="delete-btn" type="button" v-on:click="deleteTask(task)" v-bind:disabled="busy" v-bind:aria-label="'Delete ' + task.title" title="Delete task">×</button></div></div>
+      <div class="empty" v-else><div class="empty-symbol">✳</div><h3>{{ emptyTitle }}</h3><p>{{ emptyMessage }}</p></div>
+    </section>
+    <footer>ONE TASK AT A TIME <span>✳</span> YOU'VE GOT THIS</footer>
+  </main>
+</div>
+<script src="/node_modules/vue/dist/vue.min.js"></script>
+<script src="/node_modules/vue-resource/dist/vue-resource.min.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
