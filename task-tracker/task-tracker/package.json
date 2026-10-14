@@ -1,0 +1,15 @@
+{
+  "name": "node-vue-task-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Task tracker using the bulletin board's Node.js, Express, Vue 1, vue-resource and Bootstrap 3 stack",
+  "main": "server.js",
+  "scripts": {"start": "node server.js"},
+  "dependencies": {
+    "bootstrap": "^3.4.1",
+    "express": "^4.21.2",
+    "vue": "^1.0.28",
+    "vue-resource": "^0.1.17"
+  },
+  "engines": {"node": ">=18"}
+}
