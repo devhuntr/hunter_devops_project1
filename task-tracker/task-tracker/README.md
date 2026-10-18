@@ -12,6 +12,16 @@ A simple, responsive task tracker built with the **same technology stack as the 
 
 Set `PORT` to change the default port (for example, `PORT=3000 npm start` on macOS/Linux or `$env:PORT=3000; npm start` in PowerShell).
 
+## Testing
+
+Unit tests use [Jest](https://jestjs.io/) (with [supertest](https://github.com/ladjs/supertest) for the API routes) and live in `tests/`, mirroring the source layout:
+
+- `tests/server.test.js` — Express routes, validation, error handling
+- `tests/backend/tasks.test.js` — JSON file storage
+- `tests/public/app.test.js` — Vue component logic (Vue is stubbed, no browser needed)
+
+Run `npm test`. Coverage is collected on every run (report in `coverage/`) and the run fails if global coverage drops below 80%. Tests write to a temporary file via the `TASKS_FILE` environment variable, so `data/tasks.json` is never touched.
+
 ## Features
 
 - Add a task (1–160 characters).
@@ -41,5 +51,6 @@ Data is stored in a local JSON file. This is suitable for a simple single-server
 - `public/index.html` — Vue template
 - `public/app.js` — Vue 1 UI logic
 - `public/site.css` — styling
+- `tests/` — Jest unit tests
 
 The original sample uses legacy Vue 1 and vue-resource; this project intentionally preserves those technologies for stack compatibility.
