@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const file = path.join(__dirname, '..', 'data', 'tasks.json');
+const file = process.env.TASKS_FILE || path.join(__dirname, '..', 'data', 'tasks.json');
 function read() {
   try { const result = JSON.parse(fs.readFileSync(file, 'utf8')); return Array.isArray(result) ? result : []; }
   catch (err) { if (err.code === 'ENOENT') return []; throw err; }

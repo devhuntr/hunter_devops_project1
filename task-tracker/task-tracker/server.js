@@ -29,5 +29,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Unexpected server error.' });
 });
 const port = Number(process.env.PORT) || 8080;
+app.set('port', port);
+/* istanbul ignore if -- entry point only runs via `npm start`, not under Jest */
 if (require.main === module) app.listen(port, () => console.log(`Task Tracker running at http://localhost:${port}`));
 module.exports = app;
